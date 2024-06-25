@@ -15,11 +15,30 @@ router.post("/login", (req, res) => {
 
   if (email === credential.email && password === credential.password) {
     req.session.user = email;
-    res.redirect('/dashboard')
+    res.redirect('/route/dashboard')
     // res.send("Login successful");
   } else {
     res.send("Invalid username or password");
   }
 });
+
+router.get('/dashboard',(req,res)=>{
+    console.log(req.session, 'req is consoled')
+  if(req.session.user){
+    res.render('dashboard',{user:req.session.user, title: "Dashboard"})
+  }else{
+    res.send("unauthorized user")
+  }
+})
+router.get('/logout',(req,res)=>{
+  req.session.destroy(function(err){
+    if(err){
+        console.log(err);
+        res.send("Error")
+    }else{
+        res.render('base',{title:"Express",logout:"Logout successfully"})
+    }
+  })
+})
 
 module.exports = router;

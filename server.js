@@ -28,6 +28,7 @@ app.use('/route', router);
 // Home route
 app.get('/', (req, res) => {
     res.render('base', { title: "LOGIN SYSTEM" });
+    
 });
 
 app.listen(port, () => {
